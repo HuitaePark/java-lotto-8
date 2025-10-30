@@ -15,7 +15,7 @@ public class PurchaseAmount {
 
     private void verifyRemainder(int money) {
         if (money % LOTTO_PRICE != 0) {
-            throw new IllegalArgumentException("[Error] 구입 금액은 1000단위로 입력해야 합니다.");
+            throw new IllegalArgumentException("[ERROR] 구입 금액은 1000단위로 입력해야 합니다.");
         }
     }
 
