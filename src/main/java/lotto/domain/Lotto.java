@@ -37,7 +37,7 @@ public class Lotto {
         }
     }
 
-    private boolean isOutOfLange(List<Integer> numbers){
+    private boolean isOutOfLange(List<Integer> numbers) {
         return numbers.stream()
                 .anyMatch(number -> number < 1 || number > 45);
     }
