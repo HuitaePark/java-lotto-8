@@ -14,6 +14,7 @@ public class LottoDrawService {
         return IntStream.range(0, quantity)
                 .mapToObj(i -> lottoNumberGenerator.generate())
                 .map(Lotto::new)
+                .sorted()
                 .toList();
     }
 
