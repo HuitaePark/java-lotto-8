@@ -1,16 +1,9 @@
 package lotto.domain;
 
-public class BonusNumber {
+public record BonusNumber(int number) {
 
-    private final int number;
-
-    public BonusNumber(int number) {
+    public BonusNumber {
         verifyOutOfLange(number);
-        this.number = number;
-    }
-
-    public int getNumber() {
-        return number;
     }
 
     private void verifyOutOfLange(int number) {
