@@ -12,6 +12,12 @@ public class Lotto {
         this.numbers = numbers;
     }
 
+    public void checkBonusNumberDuplicate(int bonusNumber) {
+        if (numbers.contains(bonusNumber)) {
+            throw new IllegalArgumentException("[ERROR] 보너스 번호는 로또번호와 중복될수 없습니다.");
+        }
+    }
+
     private void validate(List<Integer> numbers) {
         verifySize(numbers);
         verifyDuplication(numbers);
@@ -41,4 +47,5 @@ public class Lotto {
         return numbers.stream()
                 .anyMatch(number -> number < 1 || number > 45);
     }
+
 }
