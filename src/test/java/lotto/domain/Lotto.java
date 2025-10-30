@@ -8,9 +8,14 @@ public class Lotto {
     private final List<Integer> numbers;
 
     public Lotto(List<Integer> numbers) {
+        validate(numbers);
+        this.numbers = numbers;
+    }
+
+    private void validate(List<Integer> numbers) {
         verifySize(numbers);
         verifyDuplication(numbers);
-        this.numbers = numbers;
+        verifyOutOfLange(numbers);
     }
 
     private void verifySize(List<Integer> numbers) {
@@ -26,4 +31,14 @@ public class Lotto {
         }
     }
 
+    private void verifyOutOfLange(List<Integer> numbers) {
+        if (isOutOfLange(numbers)) {
+            throw new IllegalArgumentException("[ERROR] 로또 번호는 1보다 작거나 45보다 클수 없습니다.");
+        }
+    }
+
+    private boolean isOutOfLange(List<Integer> numbers){
+        return numbers.stream()
+                .anyMatch(number -> number < 1 || number > 45);
+    }
 }
