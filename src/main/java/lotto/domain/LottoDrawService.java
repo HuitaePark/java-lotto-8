@@ -10,10 +10,10 @@ public class LottoDrawService {
         this.lottoNumberGenerator = lottoNumberGenerator;
     }
 
-    public List<Lotto> draw(int quantity) {
+    public List<IssuedLotto> draw(int quantity) {
         return IntStream.range(0, quantity)
                 .mapToObj(i -> sortInAscendingOrder(lottoNumberGenerator.generate()))
-                .map(Lotto::new)
+                .map(IssuedLotto::new)
                 .toList();
     }
 

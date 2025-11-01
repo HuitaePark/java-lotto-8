@@ -13,7 +13,7 @@ public class LottoDrawServiceTest {
     void draw_lotto_success() {
         LottoDrawService lottoDrawService = new LottoDrawService(() -> List.of(1, 2, 3, 4, 5, 6));
 
-        List<Lotto> lottos = lottoDrawService.draw(3);
+        List<IssuedLotto> lottos = lottoDrawService.draw(3);
 
         assertThat(lottos).hasSize(3);
     }

@@ -56,7 +56,7 @@ public class Lotto {
     }
 
     private boolean isSorted(List<Integer> numbers) {
-        return IntStream.range(0, numbers.size())
+        return IntStream.range(0, numbers.size() - 1)
                 .allMatch(i -> numbers.get(i) <= numbers.get(i + 1));
     }
 
