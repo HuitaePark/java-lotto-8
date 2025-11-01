@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class LottoTest {
@@ -27,4 +28,13 @@ class LottoTest {
         assertThatThrownBy(() -> new Lotto(List.of(91, 82, 73, 46, 55, 65)))
                 .isInstanceOf(IllegalArgumentException.class);
     }
+
+    @DisplayName("로또의 번호가 오름차순으로 정렬되지 않았을 경우 에러가 발생된다..")
+    @Test
+    void issue_sorted_lotto() {
+        assertThatThrownBy(() -> new Lotto(List.of(2, 1, 4, 6, 7, 8)))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("로또 번호는 오름차순으로 정렬되어야 합니다.");
+    }
+
 }
