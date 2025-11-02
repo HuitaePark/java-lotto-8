@@ -1,4 +1,4 @@
-package lotto.domain.lotto;
+package lotto.domain.value;
 
 public record BonusNumber(int value) {
 

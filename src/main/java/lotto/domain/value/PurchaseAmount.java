@@ -1,4 +1,4 @@
-package lotto.domain;
+package lotto.domain.value;
 
 public record PurchaseAmount(int money) {
     private static final int LOTTO_PRICE = 1_000;

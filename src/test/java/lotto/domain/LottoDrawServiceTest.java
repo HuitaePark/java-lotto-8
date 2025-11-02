@@ -12,9 +12,9 @@ public class LottoDrawServiceTest {
     @DisplayName("구매횟수만큼 로또를 발행한다.")
     @Test
     void draw_lotto_success() {
-        LottoDrawService lottoDrawService = new LottoDrawService(() -> List.of(1, 2, 3, 4, 5, 6));
+        DrawService drawService = new DrawService(() -> List.of(1, 2, 3, 4, 5, 6));
 
-        List<IssuedLotto> lottos = lottoDrawService.draw(3);
+        List<IssuedLotto> lottos = drawService.draw(3);
 
         assertThat(lottos).hasSize(3);
     }

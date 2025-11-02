@@ -3,12 +3,11 @@ package lotto.domain;
 import java.util.List;
 import java.util.stream.IntStream;
 import lotto.domain.lotto.IssuedLotto;
-import lotto.domain.lotto.LottoNumberGenerator;
 
-public class LottoDrawService {
+public class DrawService {
     private final LottoNumberGenerator lottoNumberGenerator;
 
-    public LottoDrawService(LottoNumberGenerator lottoNumberGenerator) {
+    public DrawService(LottoNumberGenerator lottoNumberGenerator) {
         this.lottoNumberGenerator = lottoNumberGenerator;
     }
 
