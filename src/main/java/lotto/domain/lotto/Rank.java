@@ -40,4 +40,8 @@ public enum Rank {
                         () -> new EnumMap<>(Rank.class)
                 ));
     }
+
+    public int getPrize() {
+        return prize;
+    }
 }
