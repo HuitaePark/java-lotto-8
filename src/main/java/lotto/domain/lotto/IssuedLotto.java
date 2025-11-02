@@ -14,7 +14,4 @@ public class IssuedLotto extends Lotto {
                 .count();
     }
 
-    public boolean contains(int bonusNumber) {
-        return super.numbers().contains(bonusNumber);
-    }
 }

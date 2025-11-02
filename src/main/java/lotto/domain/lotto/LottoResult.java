@@ -15,7 +15,7 @@ public class LottoResult {
 
         issuedLottos.forEach(issuedLotto -> {
             int matchCount = issuedLotto.countMatching(winningLotto);
-            boolean bonusMatch = issuedLotto.contains(bonusNumber);
+            boolean bonusMatch = winningLotto.isWinningNumber(bonusNumber);
             Rank rank = Rank.of(matchCount, bonusMatch);
             resultMap.put(rank, resultMap.get(rank) + 1);
         });
