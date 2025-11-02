@@ -44,4 +44,9 @@ public enum Rank {
     public int getPrize() {
         return prize;
     }
+
+    public String getMessage(int count) {
+        return String.format(messageFormat, String.format("%,d", prize), count);
+    }
+
 }

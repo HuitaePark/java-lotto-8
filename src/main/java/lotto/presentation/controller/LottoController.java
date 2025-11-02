@@ -48,6 +48,7 @@ public class LottoController {
 
     private void readInputWinningNumber() {
         WinningStaticsDto dto = lottoService.processWinningNumbers(readWinningNumbers(), readBonusNumber());
+        outputView.printStatics(dto);
     }
 
     private WinningLotto readWinningNumbers() {

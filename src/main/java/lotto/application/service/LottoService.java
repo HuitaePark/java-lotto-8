@@ -1,11 +1,17 @@
 package lotto.application.service;
 
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 import lotto.application.dto.IssuedLottoDto;
 import lotto.application.dto.WinningStaticsDto;
 import lotto.application.util.InputParser;
 import lotto.domain.DrawService;
+import lotto.domain.ReturnCalculator;
 import lotto.domain.lotto.IssuedLotto;
+import lotto.domain.lotto.LottoResult;
+import lotto.domain.lotto.Rank;
 import lotto.domain.lotto.WinningLotto;
 import lotto.domain.repository.LottoRepository;
 import lotto.domain.value.BonusNumber;
@@ -47,11 +53,30 @@ public class LottoService {
     }
 
     public WinningStaticsDto processWinningNumbers(WinningLotto winningLotto, BonusNumber bonusNumber) {
+        LottoResult result = LottoResult.of(winningLotto, bonusNumber.value(), lottoRepository.findAll());
 
+        String statics = findStatics(result);
+        double yield = ReturnCalculator.calculate(findAmount(result), result.getResults());
+        return new WinningStaticsDto(statics, yield);
     }
 
     private void issuedLotto(int count) {
         DrawService drawService = new DrawService(new RandomLottoNumberGenerator());
         lottoRepository.saveAll(drawService.draw(count));
+    }
+
+    private String findStatics(LottoResult result) {
+        return Arrays.stream(Rank.values())
+                .filter(rank -> rank != Rank.MISS)
+                .map(rank -> rank.getMessage(result.getCountByRank(rank)))
+                .sorted(Collections.reverseOrder())
+                .collect(Collectors.joining(System.lineSeparator()));
+    }
+
+    private int findAmount(LottoResult result) {
+        return Arrays.stream(Rank.values())
+                .filter(rank -> rank != Rank.MISS)
+                .mapToInt(result::getCountByRank)
+                .sum();
     }
 }

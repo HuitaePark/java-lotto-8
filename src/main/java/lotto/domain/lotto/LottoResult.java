@@ -1,7 +1,9 @@
 package lotto.domain.lotto;
 
+import java.util.Collections;
 import java.util.EnumMap;
 import java.util.List;
+import java.util.Map;
 
 public class LottoResult {
     private final EnumMap<Rank, Integer> results;
@@ -26,4 +28,9 @@ public class LottoResult {
     public int getCountByRank(Rank rank) {
         return results.get(rank);
     }
+
+    public Map<Rank, Integer> getResults() {
+        return Collections.unmodifiableMap(new EnumMap<>(results));
+    }
+
 }

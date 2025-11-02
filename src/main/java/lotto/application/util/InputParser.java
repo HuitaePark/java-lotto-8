@@ -19,7 +19,7 @@ public class InputParser {
     }
 
     private static void validateNumeric(String input) {
-        if (input.matches("\\d+")) {
+        if (!input.matches("\\d+")) {
             throw new IllegalArgumentException("구입금액은 숫자로 입력해야 합니다");
         }
     }
