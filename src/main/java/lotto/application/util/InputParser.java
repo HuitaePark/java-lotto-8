@@ -3,7 +3,7 @@ package lotto.application.util;
 public class InputParser {
 
 
-    public static int parse(String input) {
+    public static int parseToInt(String input) {
         validateNumeric(input);
         return Integer.parseInt(input);
     }

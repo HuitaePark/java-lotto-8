@@ -9,9 +9,10 @@ public class IssuedLotto extends Lotto {
     }
 
     public int countMatching(WinningLotto winningLotto) {
-        return (int) super.numbers().stream()
-                .filter(winningLotto::isWinningNumber)
-                .count();
+        return (int) super.numbers().stream().filter(winningLotto::isWinningNumber).count();
     }
 
+    public List<Integer> getIssuedLotto() {
+        return List.copyOf(super.numbers());
+    }
 }

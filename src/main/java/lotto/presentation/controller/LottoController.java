@@ -39,5 +39,23 @@ public class LottoController {
         }
     }
 
-    
+    private void printIssuedTicket() {
+        outputView.printIssuedTicket(lottoService.getIssuedTicket());
+    }
+
+    private void readInputWinningNumber() {
+        while (true) {
+            try {
+                outputView.entryMessage();
+                String inputWinner = inputView.inputText();
+
+                outputView.bonusMessage();
+                String inputBonus = inputView.inputText();
+
+                return;
+            } catch (IllegalArgumentException exception) {
+                outputView.printErrorMessage(exception);
+            }
+        }
+    }
 }
