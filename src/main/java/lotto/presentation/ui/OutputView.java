@@ -19,4 +19,12 @@ public class OutputView {
     public void printIssuedTicket(List<IssuedLottoDto> issuedLottoDtos) {
         issuedLottoDtos.forEach(dto -> System.out.println(dto.numbers()));
     }
+
+    public void entryMessage() {
+        System.out.println("당첨 번호를 입력해 주세요.");
+    }
+
+    public void bonusMessage() {
+        System.out.println("보너스 번호를 입력해 주세요.");
+    }
 }

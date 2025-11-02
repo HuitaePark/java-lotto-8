@@ -1,6 +1,9 @@
 package lotto.presentation.controller;
 
+import lotto.application.dto.WinningStaticsDto;
 import lotto.application.service.LottoService;
+import lotto.domain.lotto.WinningLotto;
+import lotto.domain.value.BonusNumber;
 import lotto.presentation.ui.InputView;
 import lotto.presentation.ui.OutputView;
 
@@ -44,17 +47,29 @@ public class LottoController {
     }
 
     private void readInputWinningNumber() {
+        WinningStaticsDto dto = lottoService.processWinningNumbers(readWinningNumbers(), readBonusNumber());
+    }
+
+    private WinningLotto readWinningNumbers() {
         while (true) {
             try {
                 outputView.entryMessage();
-                String inputWinner = inputView.inputText();
+                String input = inputView.inputText();
+                return lottoService.getWinningNumbers(input);
+            } catch (IllegalArgumentException e) {
+                outputView.printErrorMessage(e);
+            }
+        }
+    }
 
+    private BonusNumber readBonusNumber() {
+        while (true) {
+            try {
                 outputView.bonusMessage();
-                String inputBonus = inputView.inputText();
-
-                return;
-            } catch (IllegalArgumentException exception) {
-                outputView.printErrorMessage(exception);
+                String input = inputView.inputText();
+                return lottoService.getBonusNumbers(input);
+            } catch (IllegalArgumentException e) {
+                outputView.printErrorMessage(e);
             }
         }
     }
