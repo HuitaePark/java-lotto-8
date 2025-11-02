@@ -1,9 +1,9 @@
-package lotto.domain;
+package lotto.domain.lotto;
 
-public record BonusNumber(int number) {
+public record BonusNumber(int value) {
 
     public BonusNumber {
-        verifyOutOfLange(number);
+        verifyOutOfLange(value);
     }
 
     private void verifyOutOfLange(int number) {

@@ -2,6 +2,8 @@ package lotto.domain;
 
 import java.util.List;
 import java.util.stream.IntStream;
+import lotto.domain.lotto.IssuedLotto;
+import lotto.domain.lotto.LottoNumberGenerator;
 
 public class LottoDrawService {
     private final LottoNumberGenerator lottoNumberGenerator;
