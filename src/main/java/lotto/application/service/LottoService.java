@@ -54,9 +54,9 @@ public class LottoService {
 
     public WinningStaticsDto processWinningNumbers(WinningLotto winningLotto, BonusNumber bonusNumber) {
         LottoResult result = LottoResult.of(winningLotto, bonusNumber.value(), lottoRepository.findAll());
-
+        int amount = lottoRepository.findAll().size();
         String statics = findStatics(result);
-        double yield = ReturnCalculator.calculate(findAmount(result), result.getResults());
+        double yield = ReturnCalculator.calculate(amount, result.getResults());
         return new WinningStaticsDto(statics, yield);
     }
 
@@ -73,10 +73,4 @@ public class LottoService {
                 .collect(Collectors.joining(System.lineSeparator()));
     }
 
-    private int findAmount(LottoResult result) {
-        return Arrays.stream(Rank.values())
-                .filter(rank -> rank != Rank.MISS)
-                .mapToInt(result::getCountByRank)
-                .sum();
-    }
 }
