@@ -38,8 +38,7 @@ public class LottoController {
     }
 
     private void readInputPurchaseAmount() {
-        outputView.printStartMessage();
-        String input = inputView.inputText();
+        String input = inputView.readPurchaseAmount();
         int count = lottoService.getPurchaseCount(input);
         outputView.printPurchaseCount(count);
     }
@@ -54,16 +53,12 @@ public class LottoController {
     }
 
     private void readWinningNumbers() {
-        outputView.entryMessage();
-        String input = inputView.inputText();
-
+        String input = inputView.readWinningNumber();
         lottoService.getWinningNumbers(input);
     }
 
     private void readBonusNumber() {
-        outputView.bonusMessage();
-        String input = inputView.inputText();
-
+        String input = inputView.readBonusNumber();
         lottoService.getBonusNumbers(input);
     }
 }
