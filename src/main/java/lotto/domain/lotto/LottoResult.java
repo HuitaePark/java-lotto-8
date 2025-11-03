@@ -38,8 +38,8 @@ public class LottoResult {
     public String findStatics() {
         return Arrays.stream(Rank.values())
                 .filter(rank -> rank != Rank.MISS)
-                .map(rank -> rank.getMessage(getCountByRank(rank)))
                 .sorted(Collections.reverseOrder())
+                .map(rank -> rank.getMessage(getCountByRank(rank)))
                 .collect(Collectors.joining(System.lineSeparator()));
     }
 }
