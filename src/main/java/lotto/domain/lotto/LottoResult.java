@@ -1,9 +1,11 @@
 package lotto.domain.lotto;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class LottoResult {
     private final EnumMap<Rank, Integer> results;
@@ -33,4 +35,11 @@ public class LottoResult {
         return Collections.unmodifiableMap(new EnumMap<>(results));
     }
 
+    public String findStatics() {
+        return Arrays.stream(Rank.values())
+                .filter(rank -> rank != Rank.MISS)
+                .map(rank -> rank.getMessage(getCountByRank(rank)))
+                .sorted(Collections.reverseOrder())
+                .collect(Collectors.joining(System.lineSeparator()));
+    }
 }

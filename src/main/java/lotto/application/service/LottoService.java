@@ -1,9 +1,6 @@
 package lotto.application.service;
 
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 import lotto.application.dto.IssuedLottoDto;
 import lotto.application.dto.WinningStaticsDto;
 import lotto.application.util.InputParser;
@@ -11,7 +8,6 @@ import lotto.domain.DrawService;
 import lotto.domain.ReturnCalculator;
 import lotto.domain.lotto.IssuedLotto;
 import lotto.domain.lotto.LottoResult;
-import lotto.domain.lotto.Rank;
 import lotto.domain.lotto.WinningLotto;
 import lotto.domain.repository.BonusNumberRepository;
 import lotto.domain.repository.IssuedLottoRepository;
@@ -66,7 +62,7 @@ public class LottoService {
                 issuedLottoRepository.findAll());
 
         int amount = issuedLottoRepository.findAll().size();
-        String statics = findStatics(result);
+        String statics = result.findStatics();
         double yield = ReturnCalculator.calculate(amount, result.getResults());
         return new WinningStaticsDto(statics, yield);
     }
@@ -75,13 +71,4 @@ public class LottoService {
         DrawService drawService = new DrawService(new RandomLottoNumberGenerator());
         issuedLottoRepository.saveAll(drawService.draw(count));
     }
-
-    private String findStatics(LottoResult result) {
-        return Arrays.stream(Rank.values())
-                .filter(rank -> rank != Rank.MISS)
-                .map(rank -> rank.getMessage(result.getCountByRank(rank)))
-                .sorted(Collections.reverseOrder())
-                .collect(Collectors.joining(System.lineSeparator()));
-    }
-
 }
