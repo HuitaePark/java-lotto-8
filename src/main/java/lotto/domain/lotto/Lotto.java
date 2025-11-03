@@ -6,6 +6,10 @@ import java.util.Set;
 import lotto.domain.error.LottoErrorCode;
 
 public class Lotto {
+    private static final int NUMBERS_PER_LOTTO = 6;
+    private static final int MIN_NUMBER = 1;
+    private static final int MAX_NUMBER = 45;
+
     private final List<Integer> numbers;
 
     public Lotto(List<Integer> numbers) {
@@ -24,14 +28,14 @@ public class Lotto {
     }
 
     private void verifySize(List<Integer> numbers) {
-        if (numbers.size() != 6) {
+        if (numbers.size() != NUMBERS_PER_LOTTO) {
             throw new IllegalArgumentException(LottoErrorCode.INVALID_SIZE.getMessage());
         }
     }
 
     private void verifyDuplication(List<Integer> numbers) {
         Set<Integer> verifySet = new HashSet<>(numbers);
-        if (verifySet.size() != 6) {
+        if (verifySet.size() != NUMBERS_PER_LOTTO) {
             throw new IllegalArgumentException(LottoErrorCode.DUPLICATE_NUMBER.getMessage());
         }
     }
@@ -44,7 +48,7 @@ public class Lotto {
 
     private boolean isOutOfLange(List<Integer> numbers) {
         return numbers.stream()
-                .anyMatch(number -> number < 1 || number > 45);
+                .anyMatch(number -> number < MIN_NUMBER || number > MAX_NUMBER);
     }
 
 }
