@@ -5,7 +5,7 @@ import lotto.application.dto.IssuedLottoDto;
 import lotto.application.dto.WinningStaticsDto;
 import lotto.application.util.InputParser;
 import lotto.domain.DrawService;
-import lotto.domain.ReturnCalculator;
+import lotto.domain.util.ReturnCalculator;
 import lotto.domain.lotto.IssuedLotto;
 import lotto.domain.lotto.LottoResult;
 import lotto.domain.lotto.WinningLotto;

@@ -5,10 +5,13 @@ import java.util.Arrays;
 import java.util.List;
 import lotto.application.error.ParsingErrorCode;
 
-public class InputParser {
+public final class InputParser {
     private static final String COMMA = ",";
     private static final String ONLY_NUMBER_REGEX = "\\d+";
     private static final String LOTTO_NUMBERS_REGEX = "^\\d+(,\\d+){5}$";
+
+    private InputParser() {
+    }
 
     public static int parseToInt(String input) {
         validateNumeric(input);

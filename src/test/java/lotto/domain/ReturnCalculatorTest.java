@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.EnumMap;
 import lotto.domain.lotto.Rank;
+import lotto.domain.util.ReturnCalculator;
 import lotto.domain.value.PurchaseAmount;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
