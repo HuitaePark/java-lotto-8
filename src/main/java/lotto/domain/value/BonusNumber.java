@@ -1,5 +1,7 @@
 package lotto.domain.value;
 
+import lotto.domain.error.LottoErrorCode;
+
 public record BonusNumber(int value) {
 
     public BonusNumber {
@@ -8,7 +10,7 @@ public record BonusNumber(int value) {
 
     private void verifyOutOfLange(int number) {
         if (number > 45 || number < 1) {
-            throw new IllegalArgumentException("[ERROR] 보너스 넘버는 1에서 45 사이여야 합니다.");
+            throw new IllegalArgumentException(LottoErrorCode.BONUS_NUMBER_OUT_OF_RANGE.getMessage());
         }
     }
 

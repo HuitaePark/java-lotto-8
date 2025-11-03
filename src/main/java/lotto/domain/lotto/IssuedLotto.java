@@ -2,6 +2,7 @@ package lotto.domain.lotto;
 
 import java.util.List;
 import java.util.stream.IntStream;
+import lotto.domain.error.LottoErrorCode;
 
 public class IssuedLotto extends Lotto {
 
@@ -22,7 +23,7 @@ public class IssuedLotto extends Lotto {
 
     private void verifyIsSorted(List<Integer> numbers) {
         if (!isSorted(numbers)) {
-            throw new IllegalArgumentException("[ERROR] 로또 번호는 오름차순으로 정렬되어야 합니다.");
+            throw new IllegalArgumentException(LottoErrorCode.INVALID_SORT.getMessage());
         }
     }
 

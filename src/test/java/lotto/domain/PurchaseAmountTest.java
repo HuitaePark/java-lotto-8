@@ -24,10 +24,17 @@ public class PurchaseAmountTest {
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
-    @DisplayName("구입 금액이 1000으로 나누어 떨어지지 않을경우 에러 발생")
+    @DisplayName("구입 금액이 마이너스일 경우 에러 발생")
     @Test
     void Error_if_the_purchase_amount_is_minus() {
         assertThatThrownBy(() -> new PurchaseAmount(-1000))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @DisplayName("구입 금액이 0일 경우 에러 발생")
+    @Test
+    void Error_if_the_purchase_amount_is_zero() {
+        assertThatThrownBy(() -> new PurchaseAmount(0))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 }

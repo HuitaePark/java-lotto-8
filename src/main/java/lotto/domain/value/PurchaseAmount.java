@@ -1,5 +1,7 @@
 package lotto.domain.value;
 
+import lotto.domain.error.LottoErrorCode;
+
 public record PurchaseAmount(int money) {
     private static final int LOTTO_PRICE = 1_000;
 
@@ -14,13 +16,13 @@ public record PurchaseAmount(int money) {
 
     private void verifyRemainder(int money) {
         if (money % LOTTO_PRICE != 0) {
-            throw new IllegalArgumentException("[ERROR] 구입 금액은 1000단위로 입력해야 합니다.");
+            throw new IllegalArgumentException(LottoErrorCode.INVALID_AMOUNT_REMAINDER.getMessage());
         }
     }
 
     private void verifyMinus(int money) {
         if (money <= 0) {
-            throw new IllegalArgumentException("[ERROR] 구입 금액은 0원 미만이 될 수 없습니다.");
+            throw new IllegalArgumentException(LottoErrorCode.INVALID_AMOUNT_MINUS.getMessage());
         }
     }
 }
