@@ -58,7 +58,6 @@ public class LottoController {
         String input = inputView.inputText();
 
         lottoService.getWinningNumbers(input);
-
     }
 
     private void readBonusNumber() {
@@ -66,6 +65,5 @@ public class LottoController {
         String input = inputView.inputText();
 
         lottoService.getBonusNumbers(input);
-
     }
 }
