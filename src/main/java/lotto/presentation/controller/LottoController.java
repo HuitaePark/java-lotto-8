@@ -19,7 +19,7 @@ public class LottoController {
 
     public void run() {
         inputWithRetry(this::readInputPurchaseAmount);
-        inputWithRetry(this::printIssuedTicket);
+        printIssuedTicket();
         inputWithRetry(this::readWinningNumbers);
         inputWithRetry(this::readBonusNumber);
         readInputWinningNumber();
