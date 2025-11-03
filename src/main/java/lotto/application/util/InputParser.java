@@ -6,6 +6,8 @@ import lotto.application.error.ParsingErrorCode;
 
 public class InputParser {
     private static final String COMMA = ",";
+    public static final String ONLY_NUMBER_REGEX = "\\d+";
+    public static final String LOTTO_NUMBERS_REGEX = "^\\d+(,\\d+){5}$";
 
     public static int parseToInt(String input) {
         validateNumeric(input);
@@ -20,13 +22,13 @@ public class InputParser {
     }
 
     private static void validateNumeric(String input) {
-        if (!input.matches("\\d+")) {
+        if (!input.matches(ONLY_NUMBER_REGEX)) {
             throw new IllegalArgumentException(ParsingErrorCode.INVALID_NUMBER_INPUT.getMessage());
         }
     }
 
     private static void validateComma(String input) {
-        if (!input.matches("^\\d+(,\\d+){5}$")) {
+        if (!input.matches(LOTTO_NUMBERS_REGEX)) {
             throw new IllegalArgumentException(ParsingErrorCode.INVALID_WINNER_INPUT.getMessage());
         }
     }
