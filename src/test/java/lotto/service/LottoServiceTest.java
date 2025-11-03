@@ -40,13 +40,10 @@ class LottoServiceTest {
     @Test
     @DisplayName("구매 금액으로 로또 개수를 계산하고 발행한다")
     void getPurchaseCount() {
-        // given
         String input = "5000";
 
-        // when
         int count = lottoService.getPurchaseCount(input);
 
-        // then
         assertThat(count).isEqualTo(5);
         assertThat(issuedLottoRepository.findAll()).hasSize(5);
     }
@@ -54,10 +51,8 @@ class LottoServiceTest {
     @Test
     @DisplayName("구매 금액이 1000원 단위가 아니면 예외 발생")
     void getPurchaseCountWithInvalidAmount() {
-        // given
         String input = "5500";
 
-        // when & then
         assertThatThrownBy(() -> lottoService.getPurchaseCount(input))
                 .isInstanceOf(IllegalArgumentException.class);
     }
@@ -65,13 +60,10 @@ class LottoServiceTest {
     @Test
     @DisplayName("발행된 로또 티켓 목록을 조회한다")
     void getIssuedTicket() {
-        // given
         lottoService.getPurchaseCount("3000");
 
-        // when
         List<IssuedLottoDto> tickets = lottoService.getIssuedTicket();
 
-        // then
         assertThat(tickets).hasSize(3);
         assertThat(tickets)
                 .allSatisfy(ticket ->
@@ -82,13 +74,10 @@ class LottoServiceTest {
     @Test
     @DisplayName("당첨 번호를 저장한다")
     void getWinningNumbers() {
-        // given
         String input = "1,2,3,4,5,6";
 
-        // when
         lottoService.getWinningNumbers(input);
 
-        // then
         WinningLotto saved = winningLottoRepository.findFirst();
         assertThat(saved).isNotNull();
     }
@@ -96,15 +85,12 @@ class LottoServiceTest {
     @Test
     @DisplayName("보너스 번호를 저장한다")
     void getBonusNumbers() {
-        // given
         String input = "7";
         String winningInput = "1,2,3,4,5,6";
         lottoService.getWinningNumbers(winningInput);
-        
-        // when
+
         lottoService.getBonusNumbers(input);
 
-        // then
         BonusNumber saved = bonusNumberRepository.findFirst();
         assertThat(saved).isNotNull();
         assertThat(saved.value()).isEqualTo(7);
@@ -113,7 +99,6 @@ class LottoServiceTest {
     @Test
     @DisplayName("당첨 통계를 계산한다")
     void processWinningNumbers() {
-        // given
         issuedLottoRepository.saveAll(List.of(
                 new IssuedLotto(List.of(1, 2, 3, 4, 5, 6)),
                 new IssuedLotto(List.of(1, 2, 3, 4, 5, 7)),
@@ -122,10 +107,8 @@ class LottoServiceTest {
         winningLottoRepository.save(new WinningLotto(List.of(1, 2, 3, 4, 5, 6)));
         bonusNumberRepository.save(new BonusNumber(7));
 
-        // when
         WinningStaticsDto result = lottoService.processWinningNumbers();
 
-        // then
         assertThat(result).isNotNull();
         assertThat(result.message()).isNotNull();
         assertThat(result.yield()).isPositive();
@@ -134,10 +117,8 @@ class LottoServiceTest {
     @Test
     @DisplayName("발행된 티켓이 없으면 빈 리스트를 반환한다")
     void getIssuedTicketWhenEmpty() {
-        // when
         List<IssuedLottoDto> tickets = lottoService.getIssuedTicket();
 
-        // then
         assertThat(tickets).isEmpty();
     }
 
