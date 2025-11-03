@@ -5,6 +5,7 @@ public record PurchaseAmount(int money) {
 
     public PurchaseAmount {
         verifyRemainder(money);
+        verifyMinus(money);
     }
 
     public int getQuantity() {
@@ -17,4 +18,9 @@ public record PurchaseAmount(int money) {
         }
     }
 
+    private void verifyMinus(int money) {
+        if (money <= 0) {
+            throw new IllegalArgumentException("[ERROR] 구입 금액은 0원 미만이 될 수 없습니다.");
+        }
+    }
 }
