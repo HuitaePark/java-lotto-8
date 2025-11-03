@@ -53,6 +53,10 @@ public class LottoService {
 
     public void getBonusNumbers(String input) {
         int number = InputParser.parseToInt(input);
+
+        WinningLotto winningLotto = winningLottoRepository.findFirst();
+        winningLotto.checkBonusNumberDuplicate(number);
+
         bonusNumberRepository.save(new BonusNumber(number));
     }
 

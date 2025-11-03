@@ -98,7 +98,9 @@ class LottoServiceTest {
     void getBonusNumbers() {
         // given
         String input = "7";
-
+        String winningInput = "1,2,3,4,5,6";
+        lottoService.getWinningNumbers(winningInput);
+        
         // when
         lottoService.getBonusNumbers(input);
 

@@ -3,8 +3,8 @@ package lotto.domain;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.util.List;
+import lotto.domain.lotto.WinningLotto;
 import lotto.domain.value.BonusNumber;
-import lotto.domain.lotto.Lotto;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -22,7 +22,7 @@ public class BonusNumberTest {
     @Test
     void when_BonusNumber_duplicate_with_lotto() {
         assertThatThrownBy(() -> {
-            Lotto lotto = new Lotto(List.of(1, 2, 3, 4, 5, 6));
+            WinningLotto lotto = new WinningLotto(List.of(1, 2, 3, 4, 5, 6));
             BonusNumber bonusNumber = new BonusNumber(1);
 
             lotto.checkBonusNumberDuplicate(bonusNumber.value());
