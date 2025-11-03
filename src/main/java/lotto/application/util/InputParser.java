@@ -1,5 +1,6 @@
 package lotto.application.util;
 
+import java.math.BigInteger;
 import java.util.Arrays;
 import java.util.List;
 import lotto.application.error.ParsingErrorCode;
@@ -11,6 +12,7 @@ public class InputParser {
 
     public static int parseToInt(String input) {
         validateNumeric(input);
+        verifyNumberRange(input);
         return Integer.parseInt(input);
     }
 
@@ -32,4 +34,18 @@ public class InputParser {
             throw new IllegalArgumentException(ParsingErrorCode.INVALID_WINNER_INPUT.getMessage());
         }
     }
+
+    private static void verifyNumberRange(String input) {
+        BigInteger value = new BigInteger(input);
+        BigInteger max = BigInteger.valueOf(Integer.MAX_VALUE);
+
+        if (isBiggerThanInt(value, max)) {
+            throw new IllegalArgumentException(ParsingErrorCode.INVALID_OUT_OF_NUMBER_RANGE.getMessage());
+        }
+    }
+
+    private static boolean isBiggerThanInt(BigInteger value, BigInteger max) {
+        return value.compareTo(max) > 0;
+    }
+
 }

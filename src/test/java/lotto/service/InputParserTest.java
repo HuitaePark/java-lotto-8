@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import lotto.application.util.InputParser;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
@@ -41,4 +42,12 @@ public class InputParserTest {
         assertThatCode(() -> InputParser.parseToList(input))
                 .doesNotThrowAnyException();
     }
+
+    @DisplayName("구입 금액이 너무 많은 숫자일경우 에러가 발생한다.")
+    @Test
+    void when_input_is_high_number() {
+        assertThatThrownBy(() -> InputParser.parseToInt("100000000000"))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
+
 }
