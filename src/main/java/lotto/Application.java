@@ -13,7 +13,8 @@ public class Application {
         LottoController controller = new LottoController(
                 new InputView(),
                 new OutputView(),
-                new LottoService(new InMemoryBonusNumberRepository(),
+                new LottoService(
+                        new InMemoryBonusNumberRepository(),
                         new InMemoryIssuedLottoRepository(),
                         new InMemoryWinningLottoRepository())
         );

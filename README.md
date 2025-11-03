@@ -19,6 +19,7 @@
 
 - [x] 구입금액을 1000으로 나누어 구매 횟수를 구한다.
     - [x] ⚠️ 1000원 단위로 나누어 떨어지지 않을 경우 에러가 발생한다.
+    - [x] ⚠️ 음수일 경우 에러가 발생한다.
 - [x] 구매 횟수만큼 랜덤한 번호 6개의 로또를 발행하고 오름차순으로 정렬한다.
 - [x] 입력받은 당첨 번호를 검증한다.
     - [x] ⚠️ 중복된 번호가 있을경우 에러가 발생한다.
@@ -37,10 +38,12 @@
 - [x] build.gradle을 변경하지 않는다.
 - [x] System.exit()를 호출하지 않는다.
 - [x] 사용자가 입력하는 값은 camp.nextstep.edu.missionutils.Console의 readLine()을 활용한다.
-- [x] Random 값 추출은 camp.nextstep.edu.missionutils.Randoms의 pickUniqueNumbersInRange()를 활용한다.
 - [x] Java Style Guide를 지키며 프로그래밍 한다.
 - [x] 명시하지 않은 파일이나 패키지를 바꾸거나 이동하지 않는다.
 - [x] indent(인덴트, 들여쓰기) depth를 3이 넘지 않도록 구현한다.
 - [x] 3항 연산자를 쓰지 않는다.
 - [x] 메소드가 한가지 일만 하게 만든다.
 - [x] 테스트 코드를 작성한다.
+- [x] Random 값 추출은 camp.nextstep.edu.missionutils.Randoms의 pickUniqueNumbersInRange()를 활용한다.
+- [x] Java Enum을 적용하여 프로그램을 구현한다.
+- [x] else 예약어를 쓰지 않는다. switch/case도 허용하지 않는다.
