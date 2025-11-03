@@ -1,5 +1,6 @@
 package lotto.domain;
 
+import lotto.domain.lotto.IssuedLotto;
 import lotto.domain.lotto.Lotto;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -32,7 +33,7 @@ class LottoTest {
     @DisplayName("로또의 번호가 오름차순으로 정렬되지 않았을 경우 에러가 발생된다..")
     @Test
     void issue_sorted_lotto() {
-        assertThatThrownBy(() -> new Lotto(List.of(2, 1, 4, 6, 7, 8)))
+        assertThatThrownBy(() -> new IssuedLotto(List.of(2, 1, 4, 6, 7, 8)))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("로또 번호는 오름차순으로 정렬되어야 합니다.");
     }

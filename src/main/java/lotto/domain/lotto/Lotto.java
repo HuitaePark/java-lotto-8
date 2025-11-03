@@ -3,7 +3,6 @@ package lotto.domain.lotto;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.IntStream;
 
 public class Lotto {
     private final List<Integer> numbers;
@@ -27,7 +26,6 @@ public class Lotto {
         verifySize(numbers);
         verifyDuplication(numbers);
         verifyOutOfLange(numbers);
-        verifyIsSorted(numbers);
     }
 
     private void verifySize(List<Integer> numbers) {
@@ -47,17 +45,6 @@ public class Lotto {
         if (isOutOfLange(numbers)) {
             throw new IllegalArgumentException("[ERROR] 로또 번호는 1보다 작거나 45보다 클수 없습니다.");
         }
-    }
-
-    private void verifyIsSorted(List<Integer> numbers) {
-        if (!isSorted(numbers)) {
-            throw new IllegalArgumentException("[ERROR] 로또 번호는 오름차순으로 정렬되어야 합니다.");
-        }
-    }
-
-    private boolean isSorted(List<Integer> numbers) {
-        return IntStream.range(0, numbers.size() - 1)
-                .allMatch(i -> numbers.get(i) <= numbers.get(i + 1));
     }
 
     private boolean isOutOfLange(List<Integer> numbers) {
