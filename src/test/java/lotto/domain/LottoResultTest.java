@@ -13,81 +13,74 @@ import org.junit.jupiter.api.Test;
 
 public class LottoResultTest {
 
-    @DisplayName("발행한 로또목록과 당첨번호,보너스 번호를 비교하여 0개가 일치하는걸 찾는다.")
-    @Test
-    void Compare_the_published_lotto() {
-        WinningLotto winningLotto = new WinningLotto(List.of(1, 2, 3, 4, 5, 6));
-        DrawService drawService = new DrawService(() -> List.of(11, 12, 13, 14, 15, 16));
+    private static final int BONUS_NUMBER = 7;
+
+    private LottoResult createLottoResult(List<Integer> winningNumbers, List<Integer> issuedNumbers) {
+        WinningLotto winningLotto = new WinningLotto(winningNumbers);
+        DrawService drawService = new DrawService(() -> issuedNumbers);
         List<IssuedLotto> issuedLottos = drawService.draw(1);
-        BonusNumber bonusNumber = new BonusNumber(7);
+        BonusNumber bonusNumber = new BonusNumber(BONUS_NUMBER);
 
-        LottoResult lottoResult = LottoResult.of(winningLotto, bonusNumber.value(), issuedLottos);
-
-        assertThat(lottoResult.getCountByRank(Rank.MISS)).isEqualTo(1);
+        return LottoResult.of(winningLotto, bonusNumber.value(), issuedLottos);
     }
 
-    @DisplayName("발행한 로또목록과 당첨번호,보너스 번호를 비교하여 3개가 일치하는걸 찾는다.")
-    @Test
-    void compare_The_Published_Lotto_Fifth() {
-        WinningLotto winningLotto = new WinningLotto(List.of(1, 2, 3, 4, 5, 6));
-        DrawService drawService = new DrawService(() -> List.of(1, 2, 3, 14, 15, 16));
-        List<IssuedLotto> issuedLottos = drawService.draw(1);
-        BonusNumber bonusNumber = new BonusNumber(7);
-
-        LottoResult lottoResult = LottoResult.of(winningLotto, bonusNumber.value(), issuedLottos);
-
-        assertThat(lottoResult.getCountByRank(Rank.FIFTH_PLACE)).isEqualTo(1);
+    private void assertRank(LottoResult result, Rank rank) {
+        assertThat(result.getCountByRank(rank)).isEqualTo(1);
     }
 
-    @DisplayName("발행한 로또목록과 당첨번호,보너스 번호를 비교하여 4개가 일치하는걸 찾는다.")
+    @DisplayName("0개가 일치")
     @Test
-    void compare_The_Published_Lotto_Fourth() {
-        WinningLotto winningLotto = new WinningLotto(List.of(1, 2, 3, 4, 5, 6));
-        DrawService drawService = new DrawService(() -> List.of(1, 2, 3, 4, 15, 16));
-        List<IssuedLotto> issuedLottos = drawService.draw(1);
-        BonusNumber bonusNumber = new BonusNumber(7);
-
-        LottoResult lottoResult = LottoResult.of(winningLotto, bonusNumber.value(), issuedLottos);
-
-        assertThat(lottoResult.getCountByRank(Rank.FOURTH_PLACE)).isEqualTo(1);
+    void matchZero() {
+        LottoResult result = createLottoResult(List.of(1, 2, 3, 4, 5, 6), List.of(11, 12, 13, 14, 15, 16));
+        assertRank(result, Rank.MISS);
     }
 
-    @DisplayName("발행한 로또목록과 당첨번호,보너스 번호를 비교하여 5개가 일치하는걸 찾는다.")
+    @DisplayName("1개가 일치")
     @Test
-    void Compare_the_published_lotto_Third() {
-        WinningLotto winningLotto = new WinningLotto(List.of(1, 2, 3, 4, 5, 6));
-        DrawService drawService = new DrawService(() -> List.of(1, 2, 3, 4, 5, 16));
-        List<IssuedLotto> issuedLottos = drawService.draw(1);
-        BonusNumber bonusNumber = new BonusNumber(7);
-
-        LottoResult lottoResult = LottoResult.of(winningLotto, bonusNumber.value(), issuedLottos);
-
-        assertThat(lottoResult.getCountByRank(Rank.THIRD_PLACE)).isEqualTo(1);
+    void matchOne() {
+        LottoResult result = createLottoResult(List.of(1, 2, 3, 4, 5, 6), List.of(1, 12, 13, 14, 15, 16));
+        assertRank(result, Rank.MISS);
     }
 
-    @DisplayName("발행한 로또목록과 당첨번호,보너스 번호를 비교하여 5개와 보너스가 일치하는걸 찾는다.")
+    @DisplayName("2개가 일치")
     @Test
-    void Compare_the_published_lotto_SECOND() {
-        WinningLotto winningLotto = new WinningLotto(List.of(1, 2, 3, 4, 5, 7));
-        DrawService drawService = new DrawService(() -> List.of(1, 2, 3, 4, 5, 17));
-        List<IssuedLotto> issuedLottos = drawService.draw(1);
-        BonusNumber bonusNumber = new BonusNumber(7);
-
-        LottoResult lottoResult = LottoResult.of(winningLotto, bonusNumber.value(), issuedLottos);
-
-        assertThat(lottoResult.getCountByRank(Rank.SECOND_PLACE)).isEqualTo(1);
+    void matchTwo() {
+        LottoResult result = createLottoResult(List.of(1, 2, 3, 4, 5, 6), List.of(1, 2, 13, 14, 15, 16));
+        assertRank(result, Rank.MISS);
     }
 
-    @DisplayName("발행한 로또목록과 당첨번호,보너스 번호를 비교하여 6개가 일치하는걸 찾는다.")
+    @DisplayName("3개가 일치")
     @Test
-    void Compare_the_published_lotto_FIRST() {
-        WinningLotto winningLotto = new WinningLotto(List.of(1, 2, 3, 4, 5, 6));
-        DrawService drawService = new DrawService(() -> List.of(1, 2, 3, 4, 5, 6));
-        List<IssuedLotto> issuedLottos = drawService.draw(1);
-        BonusNumber bonusNumber = new BonusNumber(7);
+    void matchThree() {
+        LottoResult result = createLottoResult(List.of(1, 2, 3, 4, 5, 6), List.of(1, 2, 3, 14, 15, 16));
+        assertRank(result, Rank.FIFTH_PLACE);
+    }
 
-        LottoResult lottoResult = LottoResult.of(winningLotto, bonusNumber.value(), issuedLottos);
+    @DisplayName("4개가 일치")
+    @Test
+    void matchFour() {
+        LottoResult result = createLottoResult(List.of(1, 2, 3, 4, 5, 6), List.of(1, 2, 3, 4, 15, 16));
+        assertRank(result, Rank.FOURTH_PLACE);
+    }
 
-        assertThat(lottoResult.getCountByRank(Rank.FIRST_PLACE)).isEqualTo(1);
+    @DisplayName("5개가 일치")
+    @Test
+    void matchFive() {
+        LottoResult result = createLottoResult(List.of(1, 2, 3, 4, 5, 6), List.of(1, 2, 3, 4, 5, 16));
+        assertRank(result, Rank.THIRD_PLACE);
+    }
+
+    @DisplayName("5개와 보너스 번호가 일치")
+    @Test
+    void matchFivePlusBonus() {
+        LottoResult result = createLottoResult(List.of(1, 2, 3, 4, 5, 7), List.of(1, 2, 3, 4, 5, 17));
+        assertRank(result, Rank.SECOND_PLACE);
+    }
+
+    @DisplayName("6개가 일치")
+    @Test
+    void matchSix() {
+        LottoResult result = createLottoResult(List.of(1, 2, 3, 4, 5, 6), List.of(1, 2, 3, 4, 5, 6));
+        assertRank(result, Rank.FIRST_PLACE);
     }
 }
