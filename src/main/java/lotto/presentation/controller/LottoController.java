@@ -1,10 +1,7 @@
 package lotto.presentation.controller;
 
-import java.util.function.Supplier;
 import lotto.application.dto.WinningStaticsDto;
 import lotto.application.service.LottoService;
-import lotto.domain.lotto.WinningLotto;
-import lotto.domain.value.BonusNumber;
 import lotto.presentation.ui.InputView;
 import lotto.presentation.ui.OutputView;
 
@@ -23,6 +20,8 @@ public class LottoController {
     public void run() {
         inputWithRetry(this::readInputPurchaseAmount);
         inputWithRetry(this::printIssuedTicket);
+        inputWithRetry(this::readWinningNumbers);
+        inputWithRetry(this::readBonusNumber);
         readInputWinningNumber();
         inputView.closeConsole();
     }
@@ -32,16 +31,6 @@ public class LottoController {
             try {
                 task.run();
                 return;
-            } catch (IllegalArgumentException e) {
-                outputView.printErrorMessage(e);
-            }
-        }
-    }
-
-    private <T> T inputWithRetry(Supplier<T> task) {
-        while (true) {
-            try {
-                return task.get();
             } catch (IllegalArgumentException e) {
                 outputView.printErrorMessage(e);
             }
@@ -60,25 +49,23 @@ public class LottoController {
     }
 
     private void readInputWinningNumber() {
-        WinningStaticsDto dto = lottoService.processWinningNumbers(
-                inputWithRetry(this::readWinningNumbers),
-                inputWithRetry(this::readBonusNumber));
+        WinningStaticsDto dto = lottoService.processWinningNumbers();
         outputView.printStatics(dto);
     }
 
-    private WinningLotto readWinningNumbers() {
+    private void readWinningNumbers() {
         outputView.entryMessage();
         String input = inputView.inputText();
 
-        return lottoService.getWinningNumbers(input);
+        lottoService.getWinningNumbers(input);
 
     }
 
-    private BonusNumber readBonusNumber() {
+    private void readBonusNumber() {
         outputView.bonusMessage();
         String input = inputView.inputText();
 
-        return lottoService.getBonusNumbers(input);
+        lottoService.getBonusNumbers(input);
 
     }
 }

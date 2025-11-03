@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import lotto.domain.lotto.IssuedLotto;
-import lotto.domain.repository.LottoRepository;
+import lotto.domain.repository.IssuedLottoRepository;
 
-public class InMemoryLottoRepository implements LottoRepository {
+public class InMemoryIssuedLottoRepository implements IssuedLottoRepository {
     private final List<IssuedLotto> tickets = new ArrayList<>();
 
     @Override

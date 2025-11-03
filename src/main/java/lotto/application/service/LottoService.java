@@ -13,16 +13,24 @@ import lotto.domain.lotto.IssuedLotto;
 import lotto.domain.lotto.LottoResult;
 import lotto.domain.lotto.Rank;
 import lotto.domain.lotto.WinningLotto;
-import lotto.domain.repository.LottoRepository;
+import lotto.domain.repository.BonusNumberRepository;
+import lotto.domain.repository.IssuedLottoRepository;
+import lotto.domain.repository.WinningLottoRepository;
 import lotto.domain.value.BonusNumber;
 import lotto.domain.value.PurchaseAmount;
 import lotto.infra.RandomLottoNumberGenerator;
 
 public class LottoService {
-    private final LottoRepository lottoRepository;
+    private final IssuedLottoRepository issuedLottoRepository;
+    private final BonusNumberRepository bonusNumberRepository;
+    private final WinningLottoRepository winningLottoRepository;
 
-    public LottoService(LottoRepository lottoRepository) {
-        this.lottoRepository = lottoRepository;
+    public LottoService(BonusNumberRepository bonusNumberRepository,
+                        IssuedLottoRepository issuedLottoRepository,
+                        WinningLottoRepository winningLottoRepository) {
+        this.bonusNumberRepository = bonusNumberRepository;
+        this.issuedLottoRepository = issuedLottoRepository;
+        this.winningLottoRepository = winningLottoRepository;
     }
 
     public int getPurchaseCount(String input) {
@@ -36,25 +44,28 @@ public class LottoService {
     }
 
     public List<IssuedLottoDto> getIssuedTicket() {
-        List<IssuedLotto> issuedLottos = lottoRepository.findAll();
+        List<IssuedLotto> issuedLottos = issuedLottoRepository.findAll();
         return issuedLottos.stream()
                 .map(IssuedLottoDto::from)
                 .toList();
     }
 
-    public WinningLotto getWinningNumbers(String input) {
+    public void getWinningNumbers(String input) {
         List<Integer> numbers = InputParser.parseToList(input);
-        return new WinningLotto(numbers);
+        winningLottoRepository.save(new WinningLotto(numbers));
     }
 
-    public BonusNumber getBonusNumbers(String input) {
+    public void getBonusNumbers(String input) {
         int number = InputParser.parseToInt(input);
-        return new BonusNumber(number);
+        bonusNumberRepository.save(new BonusNumber(number));
     }
 
-    public WinningStaticsDto processWinningNumbers(WinningLotto winningLotto, BonusNumber bonusNumber) {
-        LottoResult result = LottoResult.of(winningLotto, bonusNumber.value(), lottoRepository.findAll());
-        int amount = lottoRepository.findAll().size();
+    public WinningStaticsDto processWinningNumbers() {
+        LottoResult result = LottoResult.of(winningLottoRepository.findFirst(),
+                bonusNumberRepository.findFirst().value(),
+                issuedLottoRepository.findAll());
+
+        int amount = issuedLottoRepository.findAll().size();
         String statics = findStatics(result);
         double yield = ReturnCalculator.calculate(amount, result.getResults());
         return new WinningStaticsDto(statics, yield);
@@ -62,7 +73,7 @@ public class LottoService {
 
     private void issuedLotto(int count) {
         DrawService drawService = new DrawService(new RandomLottoNumberGenerator());
-        lottoRepository.saveAll(drawService.draw(count));
+        issuedLottoRepository.saveAll(drawService.draw(count));
     }
 
     private String findStatics(LottoResult result) {

@@ -1,7 +1,9 @@
 package lotto;
 
 import lotto.application.service.LottoService;
-import lotto.infra.InMemoryLottoRepository;
+import lotto.infra.InMemoryBonusNumberRepository;
+import lotto.infra.InMemoryIssuedLottoRepository;
+import lotto.infra.InMemoryWinningLottoRepository;
 import lotto.presentation.controller.LottoController;
 import lotto.presentation.ui.InputView;
 import lotto.presentation.ui.OutputView;
@@ -11,7 +13,9 @@ public class Application {
         LottoController controller = new LottoController(
                 new InputView(),
                 new OutputView(),
-                new LottoService(new InMemoryLottoRepository())
+                new LottoService(new InMemoryBonusNumberRepository(),
+                        new InMemoryIssuedLottoRepository(),
+                        new InMemoryWinningLottoRepository())
         );
         controller.run();
     }

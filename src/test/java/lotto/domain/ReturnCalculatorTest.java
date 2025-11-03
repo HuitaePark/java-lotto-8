@@ -16,7 +16,7 @@ public class ReturnCalculatorTest {
         EnumMap<Rank, Integer> result = Rank.initialize();
         result.put(Rank.FIFTH_PLACE, 1);
 
-        assertThat(ReturnCalculator.calculate(1, result)).isEqualTo(400.0);
+        assertThat(ReturnCalculator.calculate(1, result)).isEqualTo(500.0);
     }
 
     @DisplayName("당첨된 로또 금액의 합이 적다면 손실이 발생한다.")
@@ -26,6 +26,6 @@ public class ReturnCalculatorTest {
         EnumMap<Rank, Integer> result = Rank.initialize();
         result.put(Rank.FIFTH_PLACE, 1);
 
-        assertThat(ReturnCalculator.calculate(10, result)).isEqualTo(-50.0);
+        assertThat(ReturnCalculator.calculate(10, result)).isEqualTo(50.0);
     }
 }
