@@ -8,7 +8,7 @@ public class WinningLotto extends Lotto {
         super(winnings);
     }
 
-    boolean isWinningNumber(int number) {
+    public boolean isWinningNumber(int number) {
         return super.numbers().contains(number);
     }
 }
