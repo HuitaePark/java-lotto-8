@@ -1,5 +1,6 @@
 package lotto.presentation.controller;
 
+import java.util.function.Supplier;
 import lotto.application.dto.WinningStaticsDto;
 import lotto.application.service.LottoService;
 import lotto.domain.lotto.WinningLotto;
@@ -20,26 +21,38 @@ public class LottoController {
     }
 
     public void run() {
-        readInputPurchaseAmount();
-        printIssuedTicket();
+        inputWithRetry(this::readInputPurchaseAmount);
+        inputWithRetry(this::printIssuedTicket);
         readInputWinningNumber();
-
         inputView.closeConsole();
     }
 
-    private void readInputPurchaseAmount() {
+    private void inputWithRetry(Runnable task) {
         while (true) {
             try {
-                outputView.printStartMessage();
-                String input = inputView.inputText();
-                int count = lottoService.getPurchaseCount(input);
-
-                outputView.printPurchaseCount(count);
+                task.run();
                 return;
-            } catch (IllegalArgumentException exception) {
-                outputView.printErrorMessage(exception);
+            } catch (IllegalArgumentException e) {
+                outputView.printErrorMessage(e);
             }
         }
+    }
+
+    private <T> T inputWithRetry(Supplier<T> task) {
+        while (true) {
+            try {
+                return task.get();
+            } catch (IllegalArgumentException e) {
+                outputView.printErrorMessage(e);
+            }
+        }
+    }
+
+    private void readInputPurchaseAmount() {
+        outputView.printStartMessage();
+        String input = inputView.inputText();
+        int count = lottoService.getPurchaseCount(input);
+        outputView.printPurchaseCount(count);
     }
 
     private void printIssuedTicket() {
@@ -47,31 +60,25 @@ public class LottoController {
     }
 
     private void readInputWinningNumber() {
-        WinningStaticsDto dto = lottoService.processWinningNumbers(readWinningNumbers(), readBonusNumber());
+        WinningStaticsDto dto = lottoService.processWinningNumbers(
+                inputWithRetry(this::readWinningNumbers),
+                inputWithRetry(this::readBonusNumber));
         outputView.printStatics(dto);
     }
 
     private WinningLotto readWinningNumbers() {
-        while (true) {
-            try {
-                outputView.entryMessage();
-                String input = inputView.inputText();
-                return lottoService.getWinningNumbers(input);
-            } catch (IllegalArgumentException e) {
-                outputView.printErrorMessage(e);
-            }
-        }
+        outputView.entryMessage();
+        String input = inputView.inputText();
+
+        return lottoService.getWinningNumbers(input);
+
     }
 
     private BonusNumber readBonusNumber() {
-        while (true) {
-            try {
-                outputView.bonusMessage();
-                String input = inputView.inputText();
-                return lottoService.getBonusNumbers(input);
-            } catch (IllegalArgumentException e) {
-                outputView.printErrorMessage(e);
-            }
-        }
+        outputView.bonusMessage();
+        String input = inputView.inputText();
+
+        return lottoService.getBonusNumbers(input);
+
     }
 }
